@@ -1,22 +1,30 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Create sequelize instance
+// Check if we're on Vercel
+const isVercel = process.env.VERCEL === '1';
+
 const sequelize = new Sequelize(
-  process.env.DB_NAME || 'meetingroi_db',
-  process.env.DB_USER || 'postgres',
-  process.env.DB_PASSWORD || 'Diksha1234',
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
     logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    },
     pool: {
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000,
-    },
+      idle: 10000
+    }
   }
 );
 
@@ -28,7 +36,10 @@ const connectDB = async () => {
     console.log('✅ Database synced');
   } catch (error) {
     console.error('❌ Database connection failed:', error.message);
-    process.exit(1);
+    // Don't exit on Vercel
+    if (!process.env.VERCEL) {
+      process.exit(1);
+    }
   }
 };
 

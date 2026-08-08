@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Environment variables (development only)
+.env
+.env.local
+.env.development
+
+# DO NOT ignore .env.production - Vercel needs it
+# .env.production  ← DON'T add this line!
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

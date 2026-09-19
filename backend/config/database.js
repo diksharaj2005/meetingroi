@@ -1,8 +1,8 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// 1. Explicitly require the pg package
-require('pg'); 
+// ✅ Explicitly require pg so Vercel bundles it
+const pg = require('pg');
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -12,8 +12,8 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
-    // 2. Add the dialectModule property
-    dialectModule: require('pg'), 
+    // ✅ Force Sequelize to use the bundled pg module
+    dialectModule: pg,
     logging: false,
     dialectOptions: {
       ssl: {

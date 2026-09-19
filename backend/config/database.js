@@ -1,6 +1,9 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
+// 1. Explicitly require the pg package
+require('pg'); 
+
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -9,6 +12,8 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
+    // 2. Add the dialectModule property
+    dialectModule: require('pg'), 
     logging: false,
     dialectOptions: {
       ssl: {

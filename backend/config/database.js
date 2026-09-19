@@ -1,9 +1,6 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Check if we're on Vercel
-const isVercel = process.env.VERCEL === '1';
-
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -36,10 +33,6 @@ const connectDB = async () => {
     console.log('✅ Database synced');
   } catch (error) {
     console.error('❌ Database connection failed:', error.message);
-    // Don't exit on Vercel
-    if (!process.env.VERCEL) {
-      process.exit(1);
-    }
   }
 };
 
